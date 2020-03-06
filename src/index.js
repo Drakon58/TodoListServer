@@ -78,6 +78,21 @@ todoRoutes.route('/update/:id').post(function (req, res) {
     });
 });
 
+todoRoutes.route('/remove/:id').post(function (req, res) {
+    TodoModel.findById(req.params.id, function (err, todo) {
+        if (!todo) {
+            res.status(404).send("data is not found");
+        } else {
+            todo.remove().then(todo => {
+                res.json('Todo removed!');
+            })
+                .catch(err => {
+                    res.status(400).send("Remove not possible");
+                });
+        }
+    });
+});
+
 app.use('/todos', todoRoutes);
 
 app.listen(PORT, function () {
