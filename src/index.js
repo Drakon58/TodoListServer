@@ -2,12 +2,14 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import mongoose, { Schema } from 'mongoose';
+import morgan from 'morgan';
 
 const PORT = 3000;
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
 
 const todoSchema = new mongoose.Schema({
     todo_description: String,
